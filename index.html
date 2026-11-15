@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Causerie Mathématique - Pareil mais différent</title>
+    <!-- Chargement de Tailwind CSS pour le style -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Police d'écriture adaptée aux enfants -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'nunito': ['Nunito', 'sans-serif'],
+                    },
+                    colors: {
+                        noel: {
+                            rouge: '#D92525',
+                            vert: '#2F803A',
+                            or: '#F2C12E',
+                            bleu: '#E0F2FE',
+                            neige: '#FFFFFF'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f0fdf4; /* Vert très pâle */
+            background-image: radial-gradient(#dcfce7 2px, transparent 2px);
+            background-size: 30px 30px;
+        }
+        
+        .bubble {
+            position: relative;
+            background: white;
+            border-radius: 1rem;
+            padding: 1rem;
+            border: 4px solid #F2C12E;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            display: none;
+        }
+
+        .bubble.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .bubble::after {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: 50px;
+            border-width: 0 15px 15px;
+            border-style: solid;
+            border-color: transparent transparent #F2C12E transparent;
+            display: block;
+            width: 0;
+        }
+
+        .bubble::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 54px;
+            border-width: 0 11px 11px;
+            border-style: solid;
+            border-color: transparent transparent white transparent;
+            display: block;
+            width: 0;
+            z-index: 1;
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.9) translateY(10px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .student-btn {
+            transition: all 0.2s ease;
+        }
+        .student-btn:hover {
+            transform: translateY(-5px);
+        }
+        .student-btn.selected {
+            ring: 4px;
+            ring-color: #D92525;
+            transform: scale(1.05);
+        }
+
+        /* Interactive SVG animations */
+        .gear {
+            transform-origin: center;
+            animation: spin 10s linear infinite;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="text-gray-800 min-h-screen pb-12">
+
+    <!-- En-tête de la causerie -->
+    <header class="bg-noel-rouge text-white p-6 shadow-lg border-b-8 border-noel-vert">
+        <div class="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+                <h1 class="text-3xl md:text-4xl font-black tracking-wide drop-shadow-md">
+                    🎄 Causerie Mathématique
+                </h1>
+                <p class="text-xl mt-2 font-bold text-noel-or">Pareil, mais différent !</p>
+                <div class="flex gap-2 mt-2">
+                    <span class="bg-white/20 px-3 py-1 rounded-full text-sm font-bold">4e Année (Cycle 2)</span>
+                    <span class="bg-white/20 px-3 py-1 rounded-full text-sm font-bold">Mesure du temps</span>
+                </div>
+            </div>
+            <div class="text-center bg-white/10 p-3 rounded-xl backdrop-blur-sm border border-white/30">
+                <p class="text-sm font-bold text-noel-or uppercase tracking-wider">Mission du jour</p>
+                <p class="text-lg">Parc d'attractions de Noël</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto mt-8 px-4">
+
+        <!-- Section Principale : Les deux images (Le support visuel) -->
+        <!-- AI Prompt context: "A cartoon classroom with kids learning, bright colors, vector art style... focusing on a Christmas amusement park and time measurement" -->
+        <div class="bg-white rounded-3xl shadow-xl p-6 md:p-8 border-4 border-noel-bleu">
+            <h2 class="text-3xl font-black text-center text-noel-vert mb-8">
+                Qu'est-ce qui est <span class="text-noel-rouge">pareil</span> ? Qu'est-ce qui est <span class="text-noel-rouge">différent</span> ?
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- IMAGE 1 : Le Carrousel des Rennes -->
+                <div class="flex flex-col items-center bg-noel-bleu rounded-2xl p-4 shadow-inner border-2 border-dashed border-blue-300">
+                    <h3 class="text-xl font-bold mb-4 text-blue-800 text-center">Le Carrousel des Rennes</h3>
+                    
+                    <!-- SVG Image 1 -->
+                    <svg viewBox="0 0 300 300" class="w-full max-w-[250px] h-auto drop-shadow-lg" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="300" height="300" rx="20" fill="#87CEEB" />
+                        <circle cx="50" cy="50" r="3" fill="white" />
+                        <circle cx="250" cy="80" r="4" fill="white" />
+                        <circle cx="150" cy="30" r="2" fill="white" />
+                        <circle cx="200" cy="150" r="3" fill="white" />
+                        
+                        <!-- Tente du carrousel -->
+                        <polygon points="150,40 50,130 250,130" fill="#D92525" />
+                        <polygon points="150,40 100,130 150,130" fill="#FFFFFF" />
+                        <polygon points="150,40 200,130 150,130" fill="#FFFFFF" />
+                        
+                        <!-- Base -->
+                        <rect x="70" y="130" width="160" height="20" fill="#F2C12E" />
+                        <rect x="80" y="150" width="140" height="100" fill="#2F803A" />
+                        
+                        <!-- Piliers -->
+                        <rect x="100" y="150" width="10" height="100" fill="#D92525" />
+                        <rect x="190" y="150" width="10" height="100" fill="#D92525" />
+                        
+                        <!-- Panneau d'attente -->
+                        <rect x="50" y="240" width="200" height="40" rx="10" fill="#8B4513" stroke="#5C2E0B" stroke-width="4" />
+                        <text x="150" y="265" font-family="sans-serif" font-size="18" font-weight="bold" fill="#F2C12E" text-anchor="middle">Durée : 90 minutes</text>
+                    </svg>
+                </div>
+
+                <!-- IMAGE 2 : Le Train des Lutins -->
+                <div class="flex flex-col items-center bg-green-100 rounded-2xl p-4 shadow-inner border-2 border-dashed border-green-300">
+                    <h3 class="text-xl font-bold mb-4 text-green-800 text-center">Le Train des Lutins</h3>
+                    
+                    <!-- SVG Image 2 -->
+                    <svg viewBox="0 0 300 300" class="w-full max-w-[250px] h-auto drop-shadow-lg" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="300" height="300" rx="20" fill="#87CEEB" />
+                        <circle cx="80" cy="60" r="4" fill="white" />
+                        <circle cx="220" cy="40" r="3" fill="white" />
+                        <circle cx="120" cy="90" r="2" fill="white" />
+                        <circle cx="260" cy="120" r="3" fill="white" />
+                        
+                        <!-- Train -->
+                        <rect x="60" y="120" width="120" height="70" rx="10" fill="#D92525" />
+                        <rect x="180" y="140" width="60" height="50" rx="5" fill="#2F803A" />
+                        <polygon points="240,190 240,140 270,190" fill="#F2C12E" /> 
+                        <!-- Cheminée -->
+                        <rect x="200" y="100" width="20" height="40" fill="#5C2E0B" />
+                        <circle cx="210" cy="80" r="15" fill="white" opacity="0.8" />
+                        <circle cx="230" cy="60" r="20" fill="white" opacity="0.6" />
+                        <!-- Fenêtre -->
+                        <rect x="80" y="130" width="40" height="40" rx="5" fill="#E0F2FE" />
+                        <!-- Roues -->
+                        <circle cx="90" cy="200" r="20" fill="#333" stroke="#F2C12E" stroke-width="4" />
+                        <circle cx="150" cy="200" r="20" fill="#333" stroke="#F2C12E" stroke-width="4" />
+                        <circle cx="210" cy="200" r="15" fill="#333" stroke="#F2C12E" stroke-width="3" />
+
+                        <!-- Panneau d'attente -->
+                        <rect x="50" y="240" width="200" height="40" rx="10" fill="#8B4513" stroke="#5C2E0B" stroke-width="4" />
+                        <text x="150" y="266" font-family="sans-serif" font-size="18" font-weight="bold" fill="#F2C12E" text-anchor="middle">Durée : 1 h 30</text>
+                    </svg>
+                </div>
+
+                <!-- IMAGE 3 : La Grande Roue Étoilée -->
+                <div class="flex flex-col items-center bg-purple-100 rounded-2xl p-4 shadow-inner border-2 border-dashed border-purple-300">
+                    <h3 class="text-xl font-bold mb-4 text-purple-800 text-center">La Grande Roue Étoilée</h3>
+                    
+                    <!-- SVG Image 3 -->
+                    <svg viewBox="0 0 300 300" class="w-full max-w-[250px] h-auto drop-shadow-lg" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="300" height="300" rx="20" fill="#87CEEB" />
+                        <circle cx="30" cy="70" r="3" fill="white" />
+                        <circle cx="270" cy="50" r="4" fill="white" />
+                        <circle cx="100" cy="30" r="2" fill="white" />
+                        
+                        <!-- Structure de la roue -->
+                        <polygon points="150,140 100,240 200,240" fill="#2F803A" />
+                        <circle cx="150" cy="120" r="80" fill="none" stroke="#F2C12E" stroke-width="6" />
+                        
+                        <!-- Rayons -->
+                        <line x1="150" y1="40" x2="150" y2="200" stroke="#F2C12E" stroke-width="4" />
+                        <line x1="70" y1="120" x2="230" y2="120" stroke="#F2C12E" stroke-width="4" />
+                        <line x1="93" y1="63" x2="207" y2="177" stroke="#F2C12E" stroke-width="4" />
+                        <line x1="207" y1="63" x2="93" y2="177" stroke="#F2C12E" stroke-width="4" />
+                        
+                        <!-- Cabines -->
+                        <rect x="140" y="30" width="20" height="20" fill="#D92525" rx="3" />
+                        <rect x="140" y="190" width="20" height="20" fill="#D92525" rx="3" />
+                        <rect x="60" y="110" width="20" height="20" fill="#D92525" rx="3" />
+                        <rect x="220" y="110" width="20" height="20" fill="#D92525" rx="3" />
+                        <rect x="83" y="53" width="20" height="20" fill="#D92525" rx="3" />
+                        <rect x="197" y="167" width="20" height="20" fill="#D92525" rx="3" />
+                        <rect x="197" y="53" width="20" height="20" fill="#D92525" rx="3" />
+                        <rect x="83" y="167" width="20" height="20" fill="#D92525" rx="3" />
+                        
+                        <!-- Centre -->
+                        <circle cx="150" cy="120" r="10" fill="#D92525" />
+
+                        <!-- Panneau d'attente -->
+                        <rect x="50" y="240" width="200" height="40" rx="10" fill="#8B4513" stroke="#5C2E0B" stroke-width="4" />
+                        <text x="150" y="266" font-family="sans-serif" font-size="16" font-weight="bold" fill="#F2C12E" text-anchor="middle">De 10 h 00 à 11 h 30</text>
+                    </svg>
+                </div>
+
+                <!-- IMAGE 4 : La Patinoire Enchantée -->
+                <div class="flex flex-col items-center bg-orange-50 rounded-2xl p-4 shadow-inner border-2 border-dashed border-orange-300">
+                    <h3 class="text-xl font-bold mb-4 text-orange-800 text-center">La Patinoire Enchantée</h3>
+                    
+                    <!-- SVG Image 4 -->
+                    <svg viewBox="0 0 300 300" class="w-full max-w-[250px] h-auto drop-shadow-lg" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="300" height="300" rx="20" fill="#87CEEB" />
+                        <circle cx="60" cy="50" r="3" fill="white" />
+                        <circle cx="240" cy="80" r="4" fill="white" />
+                        
+                        <!-- Glace (Ovale) -->
+                        <ellipse cx="150" cy="160" rx="110" ry="60" fill="#E0F2FE" stroke="#B9E3.8" stroke-width="4" />
+                        
+                        <!-- Patineur 1 -->
+                        <circle cx="110" cy="130" r="12" fill="#F2C12E" />
+                        <rect x="100" y="142" width="20" height="30" fill="#D92525" rx="5" />
+                        <line x1="110" y1="172" x2="105" y2="190" stroke="black" stroke-width="4" stroke-linecap="round" />
+                        <line x1="110" y1="172" x2="120" y2="185" stroke="black" stroke-width="4" stroke-linecap="round" />
+                        
+                        <!-- Patineur 2 -->
+                        <circle cx="190" cy="150" r="10" fill="#D92525" />
+                        <rect x="182" y="160" width="16" height="25" fill="#2F803A" rx="4" />
+                        <line x1="190" y1="185" x2="185" y2="200" stroke="black" stroke-width="3" stroke-linecap="round" />
+                        <line x1="190" y1="185" x2="200" y2="195" stroke="black" stroke-width="3" stroke-linecap="round" />
+
+                        <!-- Panneau d'attente -->
+                        <rect x="40" y="240" width="220" height="40" rx="10" fill="#8B4513" stroke="#5C2E0B" stroke-width="4" />
+                        <text x="150" y="266" font-family="sans-serif" font-size="15" font-weight="bold" fill="#F2C12E" text-anchor="middle">3 périodes de 30 minutes</text>
+                    </svg>
+                </div>
+
+            </div>
+            
+            <p class="text-center text-gray-500 mt-6 font-semibold">
+                Astuce : Observe bien comment la durée est écrite sur chaque panneau !
+            </p>
+        </div>
+
+        <!-- Section Interactive : Idées des élèves (Flexibilité cognitive) -->
+        <div class="mt-8 bg-white rounded-3xl shadow-lg p-6 border-2 border-gray-100">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                💬 Qu'en pensent les autres élèves ?
+                <span class="text-sm font-normal text-gray-500 bg-gray-100 px-3 py-1 rounded-full">Clique sur un avatar pour lire son idée</span>
+            </h3>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                <!-- Avatar Léo -->
+                <button onclick="showBubble('leo')" class="student-btn flex flex-col items-center p-4 bg-orange-50 rounded-2xl border-2 border-orange-200 hover:bg-orange-100 focus:outline-none">
+                    <div class="text-4xl mb-2">👦🏽</div>
+                    <span class="font-bold text-orange-800">Léo</span>
+                </button>
+                <!-- Avatar Mia -->
+                <button onclick="showBubble('mia')" class="student-btn flex flex-col items-center p-4 bg-purple-50 rounded-2xl border-2 border-purple-200 hover:bg-purple-100 focus:outline-none">
+                    <div class="text-4xl mb-2">👧🏻</div>
+                    <span class="font-bold text-purple-800">Mia</span>
+                </button>
+                <!-- Avatar Sam -->
+                <button onclick="showBubble('sam')" class="student-btn flex flex-col items-center p-4 bg-blue-50 rounded-2xl border-2 border-blue-200 hover:bg-blue-100 focus:outline-none">
+                    <div class="text-4xl mb-2">🧑🏼</div>
+                    <span class="font-bold text-blue-800">Sam</span>
+                </button>
+                <!-- Avatar Zoé -->
+                <button onclick="showBubble('zoe')" class="student-btn flex flex-col items-center p-4 bg-pink-50 rounded-2xl border-2 border-pink-200 hover:bg-pink-100 focus:outline-none">
+                    <div class="text-4xl mb-2">👧🏾</div>
+                    <span class="font-bold text-pink-800">Zoé</span>
+                </button>
+            </div>
+
+            <!-- Bulles de dialogue (Cachées par défaut) -->
+            <div id="bubble-leo" class="bubble">
+                <p class="text-lg text-gray-700 font-medium">
+                    « C'est <strong>pareil</strong> parce que les 4 activités durent exactement le même temps ! <br>
+                    <span class="text-noel-rouge font-bold">90 minutes</span>, c'est la même chose que <span class="text-noel-rouge font-bold">1h30</span>. »
+                </p>
+            </div>
+
+            <div id="bubble-mia" class="bubble">
+                <p class="text-lg text-gray-700 font-medium">
+                    « C'est <strong>différent</strong> parce que la façon d'écrire le temps change sur chaque panneau. <br>
+                    Parfois on utilise juste des minutes, parfois des heures et des minutes, ou même une heure de début et de fin ! »
+                </p>
+            </div>
+
+            <div id="bubble-sam" class="bubble">
+                <p class="text-lg text-gray-700 font-medium">
+                    « Moi, j'ai calculé que c'est <strong>pareil</strong> ! Pour la Grande Roue, de 10h à 11h30, ça fait 1h30. <br>
+                    Et pour la patinoire, 3 fois 30 minutes (30+30+30), ça donne 90 minutes, donc 1h30 aussi ! »
+                </p>
+            </div>
+
+            <div id="bubble-zoe" class="bubble">
+                <p class="text-lg text-gray-700 font-medium">
+                    « Une <strong>différence</strong>, c'est que ce ne sont pas les mêmes attractions. <br>
+                    Il y a des manèges où on s'assoit, et la patinoire où on doit faire un effort physique pendant les périodes de 30 minutes ! »
+                </p>
+            </div>
+        </div>
+
+        <!-- Section Professeur (Accordéon) -->
+        <div class="mt-8 bg-blue-50 rounded-3xl shadow p-6 border-l-8 border-blue-500">
+            <button onclick="toggleGuide()" class="w-full flex justify-between items-center text-left focus:outline-none group">
+                <h3 class="text-xl font-bold text-blue-900 flex items-center gap-2">
+                    🍎 Guide d'animation pour l'enseignant.e
+                </h3>
+                <span id="guide-icon" class="text-2xl text-blue-500 transform transition-transform duration-300">▼</span>
+            </button>
+            
+            <div id="teacher-guide" class="hidden mt-6 space-y-6">
+                
+                <div class="bg-white p-4 rounded-xl shadow-sm">
+                    <h4 class="font-bold text-blue-800 mb-2 uppercase text-sm tracking-wider">🎯 Intentions Mathématiques (PFEQ - Cycle 2)</h4>
+                    <ul class="list-disc list-inside text-gray-700 space-y-1 ml-2">
+                        <li>Établir des relations entre les unités de mesure de temps.</li>
+                        <li>Convertir des minutes en heures et vice-versa.</li>
+                        <li>Calculer la durée d'un événement (temps écoulé).</li>
+                        <li>Faire preuve de flexibilité cognitive avec de multiples représentations d'une même quantité.</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-blue-800 mb-3 text-lg">Démarche pas à pas (10-15 minutes)</h4>
+                    
+                    <div class="space-y-4">
+                        <div class="flex gap-4">
+                            <div class="bg-blue-200 text-blue-800 font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0">1</div>
+                            <div>
+                                <p class="font-bold text-gray-800">L'Amorce (Observation silencieuse)</p>
+                                <p class="text-gray-600">Affichez les 4 images. Laissez les élèves observer les indices visuels (textes sur les panneaux, types de manèges) en silence pendant 30 secondes.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="bg-blue-200 text-blue-800 font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0">2</div>
+                            <div>
+                                <p class="font-bold text-gray-800">Temps de réflexion individuel</p>
+                                <p class="text-gray-600">Posez la question : <em>"Trouvez des choses pareilles ou différentes parmi ces 4 affiches. Pensez au temps !"</em> Laissez 1 à 2 minutes de réflexion (pouces sur le cœur quand ils ont une idée).</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="bg-blue-200 text-blue-800 font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0">3</div>
+                            <div>
+                                <p class="font-bold text-gray-800">Partage en dyades (Équipes de 2)</p>
+                                <p class="text-gray-600">Demandez-leur d'échanger. Encouragez-les à valider s'ils ont trouvé le grand secret : <strong>toutes les durées sont égales !</strong></p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="bg-blue-200 text-blue-800 font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0">4</div>
+                            <div>
+                                <p class="font-bold text-gray-800">Mise en commun et Démonstration</p>
+                                <p class="text-gray-600">Recueillez les idées au tableau. Demandez à un élève de venir prouver comment "De 10h à 11h30" est égal à "90 minutes". Acceptez aussi les différences plus créatives ("Certains manèges tournent, d'autres non").</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="bg-blue-200 text-blue-800 font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0">5</div>
+                            <div>
+                                <p class="font-bold text-gray-800">Synthèse</p>
+                                <p class="text-gray-600">Faites un retour sur l'équivalence de base : <strong>1 heure = 60 minutes</strong>. Donc 1h30, c'est 60 + 30 = 90 minutes. Et 3 fois 30, c'est aussi 90 !</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Logique pour afficher/masquer les bulles de dialogue des élèves virtuels
+        function showBubble(studentId) {
+            // Masquer toutes les bulles
+            const bubbles = document.querySelectorAll('.bubble');
+            bubbles.forEach(b => b.classList.remove('active'));
+
+            // Afficher la bulle sélectionnée
+            const targetBubble = document.getElementById('bubble-' + studentId);
+            targetBubble.classList.add('active');
+        }
+
+        // Logique pour ouvrir/fermer le guide de l'enseignant (Accordéon)
+        function toggleGuide() {
+            const guide = document.getElementById('teacher-guide');
+            const icon = document.getElementById('guide-icon');
+            
+            if (guide.classList.contains('hidden')) {
+                guide.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                guide.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+    </script>
+</body>
+</html>
